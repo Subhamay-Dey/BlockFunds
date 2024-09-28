@@ -16,6 +16,7 @@ contract Escrow {
     address public nftAddress;
 
     mapping(uint256 => bool) public isListed;
+    mapping(uint256 => uint256) public purchasePrice;
 
     constructor(
             address _nftAddress, 
@@ -29,9 +30,10 @@ contract Escrow {
             nftAddress = _nftAddress;
         }
 
-    function listing(uint256 _nftID) public {
+    function listing(uint256 _nftID, uint256 _purchasePrice) public {
         IERC721(nftAddress).transferFrom(msg.sender, address(this), _nftID);
 
         isListed[_nftID] = true;
+        purchasePrice[_nftID] = _purchasePrice;
     }
 }
