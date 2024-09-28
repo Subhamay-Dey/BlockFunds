@@ -11,27 +11,7 @@ describe('Escrow', () => {
     let escrow
 
     beforeEach(async () => {
-        
-    })
-
-    describe("Deployment", () => {
-        it("Returns NFT address", async() => {
-
-        })
-        it("Returns seller address", async() => {
-            
-        })
-        it("Returns inspector address", async() => {
-            
-        })
-        it("Returns lender address", async() => {
-            
-        })
-    })
-
-
-    it('saves the address', async() => {
-
+        //Setup accounts
         [buyer, seller, inspector, lender] = await ethers.getSigners()
 
         // Deploy Real Estate
@@ -49,11 +29,25 @@ describe('Escrow', () => {
             inspector.address,
             lender.address,
         )
-
-        let result = await escrow.nftAddress()
-        expect(result).to.equal(realEstate.address)
-
-        result = await escrow.seller()
-        expect(result).to.equal(seller.address)
     })
+
+    describe("Deployment", () => {
+        it("Returns NFT address", async() => {
+            const result = await escrow.nftAddress()
+            expect(result).to.be.equal(realEstate.address)
+        })
+        it("Returns seller address", async() => {
+            const result = await escrow.seller()
+            expect(result).to.be.equal(seller.address)
+        })
+        it("Returns inspector address", async() => {
+            const result = await escrow.inspector()
+            expect(result).to.be.equal(inspector.address)
+        })
+        it("Returns lender address", async() => {
+            const result = await escrow.lender()
+            expect(result).to.be.equal(lender.address)
+        })
+    })
+
 })
