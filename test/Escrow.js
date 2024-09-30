@@ -6,9 +6,9 @@ const tokens = (n) => {
 }
 
 describe('Escrow', () => {
-    let buyer, seller, inspector, lender
-    let realEstate
-    let escrow
+    let buyer, seller, inspector, lender;
+    let realEstate;
+    let escrow;
 
     beforeEach(async () => {
         //Setup accounts
@@ -78,6 +78,15 @@ describe('Escrow', () => {
         it("Returns buyer adderss", async() => {
             const result = await escrow.buyer(1)
             expect(result).to.be.equal(buyer.address)
+        })
+    })
+
+    describe("Deposits", () => {
+        it("Updates contract balance", async () => {
+            const transaction = await escrow.connect(buyer).depositEarnest(1, {value: tokens(5)})
+            await transaction.wait()
+            const result = await escrow.getBalance()
+            expect(result).to.be.equal(tokens(5))
         })
     })
 })
