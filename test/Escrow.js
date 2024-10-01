@@ -1,5 +1,6 @@
 const { expect } = require('chai');
 const { ethers } = require('hardhat');
+const { boolean } = require('hardhat/internal/core/params/argumentTypes');
 
 const tokens = (n) => {
     return ethers.utils.parseUnits(n.toString(), 'ether')
@@ -87,6 +88,15 @@ describe('Escrow', () => {
             await transaction.wait()
             const result = await escrow.getBalance()
             expect(result).to.be.equal(tokens(5))
+        })
+    })
+
+    describe("Inspection", () => {
+        it("Updates inspection status", async() => {
+            const transaction = await escrow.connect(inspector).updateInspectionStatus(1, true);
+            await transaction.wait();
+            const result = await escrow.____(boolean)
+            expect(result).to.be.equal(true)
         })
     })
 })
